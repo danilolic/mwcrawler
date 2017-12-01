@@ -3,9 +3,7 @@ require 'nokogiri'
 require 'open-uri'
 require 'terminal-table'
 require 'pry'
-i = 0
 rows = []
-row = []
 classes = []
 _class = {}
 site = 'https://matriculaweb.unb.br/graduacao/'
@@ -40,27 +38,35 @@ end
 
 # Itera sobre todas as matérias pegando todas as turmas
 course_links.each do |course_link|
-  url = site + "course_link"
+  url = site + course_link
   page = Nokogiri::HTML(open(url))
   page_classes = page.css('.tabela-oferta .turma').map { |item| item.text}
-  
-  row << page.css('#datatable tr:first-child a').text
-  row << page.css('#datatable')[0].css('tr:nth-child(2) td').text
-  row << page.css('#datatable')[0].css('tr:nth-child(3) td').text
-  row << page.css('#datatable')[0].css('tr:nth-child(4) td').text
+  department 	 = page.css('#datatable tr:first-child a').text
+  code 				 = page.css('#datatable')[0].css('tr:nth-child(2) td').text
+  course  		 = page.css('#datatable')[0].css('tr:nth-child(3) td').text
+  credits 		 = page.css('#datatable')[0].css('tr:nth-child(4) td').text
   
 
   page_classes.each_with_index do |cl, i|
+    row = []
+    row << department
+    row << code
+    row << course
+    row << credits
     row << cl
-    row << page.css('.tabela-oferta')[i].css('tr td:nth-child(4) table tr:first-child td').map { |item| item.text }
-    row << page.css('.tabela-oferta')[i].css('tr td:nth-child(5) td').map { |item| item.text }
-    rows << row
+    # HORÁRIOS
+    schedules = page.css('.tabela-oferta')[i].css('tr td:nth-child(4) table tr:first-child td').map { |item| item.text }
+    schedules.join 
+    # PROFESSORES
+    teachers = page.css('.tabela-oferta')[i].css('tr td:nth-child(5) td').map { |item| item.text }
+    row << teachers.join("\n")
+    rows << row  
+    puts "Processando"
   end
 end
-
 table = Terminal::Table.new :title => "Mal feito, feito", 
     														:headings => ['Departamento', 'Código', 'Nome', 'Créditos', 'Turma', 'Horário', 'Professor'],
-    														:rows => rows
-    			
-File.open(text.txt, 'w') { |file| file.write(table) }											
-puts table
+    														:rows => rows,
+    														:style => {:all_separators => true}
+
+File.open("text.txt", 'w') { |file| file.write(table) }											
