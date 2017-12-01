@@ -3,10 +3,13 @@ require 'nokogiri'
 require 'open-uri'
 require 'terminal-table'
 require 'pry'
+
+# Cada Turma será uma linha, então rows é o conjunto de todasa as turmas
 rows = []
-classes = []
-_class = {}
+
+# Domínio
 site = 'https://matriculaweb.unb.br/graduacao/'
+
 # Lista os campi
 # 1 - Darcy Ribeiro
 # 2 - Planaltina
@@ -34,8 +37,9 @@ dep_links.each do |dep_link|
   page = Nokogiri::HTML(open(url))
   course_links = page.css('#datatable tr td:nth-child(2) a').map { |link| link['href'] }
 end
-
-
+# Contadores
+turmas_total = 0
+turmas = 0
 # Itera sobre todas as matérias pegando todas as turmas
 course_links.each do |course_link|
   url = site + course_link
@@ -56,17 +60,26 @@ course_links.each do |course_link|
     row << cl
     # HORÁRIOS
     schedules = page.css('.tabela-oferta')[i].css('tr td:nth-child(4) table tr:first-child td').map { |item| item.text }
-    schedules.join 
+    schdule = ""
+    while schedules.size != 0 do
+    	day = schedules.slice!(0)
+    	start_time = schedules.slice!(0)
+    	end_time = schedules.slice!(0)
+    	schdule = "#{schdule} #{day} #{start_time} #{end_time} \n" 
+    end
+    row << schdule
     # PROFESSORES
     teachers = page.css('.tabela-oferta')[i].css('tr td:nth-child(5) td').map { |item| item.text }
     row << teachers.join("\n")
-    rows << row  
-    puts "Processando"
+    rows << row
+    turmas = turmas + 1
+    turmas_total = turmas
+    puts turmas_total
   end
 end
-table = Terminal::Table.new :title => "Mal feito, feito", 
-    														:headings => ['Departamento', 'Código', 'Nome', 'Créditos', 'Turma', 'Horário', 'Professor'],
-    														:rows => rows,
-    														:style => {:all_separators => true}
+table = Terminal::Table.new :title => "Lista de todas as turmas do Matrícula Web", 
+														:headings => ['Departamento', 'Código', 'Nome', 'Créditos', 'Turma', 'Horário', 'Professor'],
+														:rows => rows,
+														:style => {:all_separators => true, :border_x => "_", :border_i => "_"}
 
 File.open("text.txt", 'w') { |file| file.write(table) }											
