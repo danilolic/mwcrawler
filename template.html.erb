@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	<meta charset="UTF-8">
+	<title>Craweler Mátricula web</title>
+</head>
+<body>
+
+<table class="responsive-table bordered striped centered" >
+	<thead>
+		<th>DEPARTAMENTO</th>
+		<th>CÓDIGO</th>
+		<th>MATÉRIA</th>
+		<th>CRÉDITOS</th>
+		<th>TURMA</th>
+		<th>HORÁRIOS</th>
+		<th>PROFESSOR</th>	
+	</thead>
+	<tbody>
+		<% @rows.each do |row| %>
+	 	<tr>
+	 		<td><%= row[:department] %></td>
+	 		<td><%= row[:code] %></td>
+	 		<td><%= row[:course] %></td>
+	 		<td><%= row[:credits] %></td>
+	 		<td><%= row[:name] %></td>
+	 		<td>
+	 			<% row[:schedules].each do |schedule| %>
+	 				<%= schedule %>
+					<br>
+	 			<% end %>
+			</td>
+	 		<td>
+	 			<% row[:teachers].each do |teacher| %>
+	 				<%= teacher[:name]%>
+					<br>
+	 			<% end %>
+	 		</td>
+	 	</tr>
+	 	<% end %>
+	</tbody>
+</table>
+
+</body>
+</html>
