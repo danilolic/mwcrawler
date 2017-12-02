@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
-require 'terminal-table'
+require 'erb'
 require 'pry'
 
 
@@ -13,7 +13,7 @@ require 'pry'
 
 def crawler(id_campus, file_name)
 	# Cada Turma será uma linha, então rows é o conjunto de todasa as turmas
-	rows = []
+	@rows = []
 
 	# Lista de departamentos (inicialmente vazia)
 	dep_links = []
@@ -52,39 +52,45 @@ def crawler(id_campus, file_name)
 	  credits 		 = page.css('#datatable')[0].css('tr:nth-child(4) td').text
 	  
 	  page_classes.each_with_index do |cl, i|
-	    row = []
-	    row << department
-	    row << code
-	    row << course
-	    row << credits
-	    row << cl
+	    row = {}
+	    row[:department] = department
+	    row[:code] = code
+	    row[:course] = course
+	    row[:credits] = credits
+	    row[:name] = cl
 	    # FORMATA HORÁRIOS
 	    schedules = page.css('.tabela-oferta')[i].css('tr td:nth-child(4) table tr:first-child td').map { |item| item.text }
-	    schdule = ""
+	    row[:schedules] = []
 	    while schedules.size != 0 do
-	    	day = schedules.slice!(0)
-	    	start_time = schedules.slice!(0)
-	    	end_time = schedules.slice!(0)
-	    	schdule = "#{schdule} #{day} #{start_time} #{end_time} \n" 
+	    	schedule = []
+	    	schedule << schedules.slice!(0)
+	    	schedule << schedules.slice!(0)
+	    	schedule << schedules.slice!(0)
+	    	row[:schedules] << schedule.join(' ') 
 	    end
-	    row << schdule
 	    # FORMATA PROFESSORES
 	    teachers = page.css('.tabela-oferta')[i].css('tr td:nth-child(5) td').map { |item| item.text }
-	    row << teachers.join("\n")
-	    rows << row
+	    row[:teachers] = []
+	    teacher = {}
+	    while teachers.size != 0 do
+	    	teacher[:name] = teachers.slice!(0)
+	    	row[:teachers] << teacher
+	    end
+	    
+	    @rows << row
 	    class_count = class_count + 1
 	    classes = class_count
 	    puts "Total de turmas: #{classes}"
 	  end
 	end
-	# SALVA AS ROWS NA TABELA
-	table = Terminal::Table.new :title => "Lista de todas as turmas do Matrícula Web", 
-															:headings => ['Departamento', 'Código', 'Nome', 'Créditos', 'Turma', 'Horário', 'Professor'],
-															:rows => rows,
-															:style => {:all_separators => true, :border_x => "_", :border_i => "_"}
+	# render template
+	template = File.read('./template.html.erb')
+	result = ERB.new(template).result(binding)
 
-	# ESCREVE NO ARQUIVO
-	File.open(file_name, 'w') { |file| file.write(table) }											
+	# write result to file
+	File.open(file_name, 'w+') do |f|
+	  f.write result
+	end										
 end
 
 def menu
@@ -99,13 +105,13 @@ def menu
 
 	case a
 	when 1
-	  crawler(1, "darcy_crawler.txt")
+	  crawler(1, "darcy_crawler.html")
 	when 2
-	  crawler(2, "planaltina_crawler.txt")
+	  crawler(2, "planaltina_crawler.html")
 	when 3
-	  crawler(3, "ceilandia_crawler.txt")
+	  crawler(3, "ceilandia_crawler.html")
 	when 4
-	  crawler(4, "gama_crawler.txt")
+	  crawler(4, "gama_crawler.html")
 	else
 	  system "clear" or system "cls"
 	  menu
