@@ -59,12 +59,12 @@ def crawler(id_campus, file_name)
 	    row[:course] = course
 	    row[:credits] = credits
 			row[:name] = cl
-			row[:total_vacancies] = page.css('.tabela-oferta')[i]
+			row[:vacancies_total] = page.css('.tabela-oferta')[i]
 											.css('.tabela-vagas tr:nth-child(1) td:nth-child(3)').text
 			row[:vacancies_occupied] = page.css('.tabela-oferta')[i]
 											.css('.tabela-vagas tr:nth-child(2) td:nth-child(3)').text
 
-			row[:free_vacancies] = page.css('.tabela-oferta')[i]
+			row[:vacancies_free] = page.css('.tabela-oferta')[i]
 											.css('.tabela-vagas tr:nth-child(3) td:nth-child(3)').text
 
 			binding.pry
