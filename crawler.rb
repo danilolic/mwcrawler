@@ -8,7 +8,7 @@ require 'json'
 # Lista os campi
 # 1 - Darcy Ribeiro
 # 2 - Planaltina
-# 3 - Ceilândia muita treta
+# 3 - Ceilândia
 # 4 - Gama
 
 def crawler(id_campus, file_name)
@@ -52,14 +52,22 @@ def crawler(id_campus, file_name)
 	  code 				 = page.css('#datatable')[0].css('tr:nth-child(2) td').text
 	  course  		 = page.css('#datatable')[0].css('tr:nth-child(3) td').text
 	  credits 		 = page.css('#datatable')[0].css('tr:nth-child(4) td').text
-
 	  page_classes.each_with_index do |cl, i|
 	    row = {}
 	    row[:department] = department
 	    row[:code] = code
 	    row[:course] = course
 	    row[:credits] = credits
-	    row[:name] = cl
+			row[:name] = cl
+			row[:total_vacancies] = page.css('.tabela-oferta')[i]
+											.css('.tabela-vagas tr:nth-child(1) td:nth-child(3)').text
+			row[:vacancies_occupied] = page.css('.tabela-oferta')[i]
+											.css('.tabela-vagas tr:nth-child(2) td:nth-child(3)').text
+
+			row[:free_vacancies] = page.css('.tabela-oferta')[i]
+											.css('.tabela-vagas tr:nth-child(3) td:nth-child(3)').text
+
+			binding.pry
 	    # FORMATA HORÁRIOS
       schedules = page.css('.tabela-oferta')[i]
                       .css('tr td:nth-child(4) table tr:first-child td')
