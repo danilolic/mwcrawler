@@ -67,7 +67,6 @@ def crawler(id_campus, file_name)
 			row[:vacancies_free] = page.css('.tabela-oferta')[i]
 											.css('.tabela-vagas tr:nth-child(3) td:nth-child(3)').text
 
-			binding.pry
 	    # FORMATA HORÁRIOS
       schedules = page.css('.tabela-oferta')[i]
                       .css('tr td:nth-child(4) table tr:first-child td')
@@ -78,8 +77,9 @@ def crawler(id_campus, file_name)
 	    	schedule << schedules.slice!(0)
 	    	schedule << schedules.slice!(0)
 	    	schedule << schedules.slice!(0)
-        row[:schedules] << schedule.join(' ')
+        row[:schedules] << schedule
 	    end
+
 	    # FORMATA PROFESSORES
       teachers = page.css('.tabela-oferta')[i]
                      .css('tr td:nth-child(5) td')
