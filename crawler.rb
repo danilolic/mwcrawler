@@ -81,16 +81,15 @@ def crawler(id_campus, file_name)
 	    end
 
 	    # FORMATA PROFESSORES
-      teachers = page.css('.tabela-oferta')[i]
-                     .css('tr td:nth-child(5) td')
-                     .map { |item| item.text }
 	    row[:teachers] = []
-	    teacher = {}
-	    while teachers.size != 0 do
-	    	teacher[:name] = teachers.slice!(0)
-	    	row[:teachers] << teacher
-	    end
+      teachers = page.css('.tabela-oferta')[i]
+                       .css('tr td:nth-child(5) td')
+                       .map { |item| item.text }
+      if teachers.size == 0
+      	teachers = ["A Designar"]
+      end
 
+      row[:teachers] = teachers
 	    @rows << row
 	    class_count = class_count + 1
 	    classes = class_count
