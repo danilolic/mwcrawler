@@ -68,15 +68,18 @@ def crawler(id_campus, file_name)
 											.css('.tabela-vagas tr:nth-child(3) td:nth-child(3)').text
 
 	    # FORMATA HORÁRIOS
-      schedules = page.css('.tabela-oferta')[i]
-                      .css('tr td:nth-child(4) table tr:first-child td')
-                      .map { |item| item.text }
+      schedules = page.css('.tabela-oferta')[i].css('tr td:nth-child(4) .table').css('td').map { |item| item.text }
+
       row[:schedules] = []
 	    while schedules.size != 0 do
 	    	schedule = []
 	    	schedule << schedules.slice!(0)
 	    	schedule << schedules.slice!(0)
 	    	schedule << schedules.slice!(0)
+	    	# RETIRANDO LIXO
+	    	schedules.slice!(0)
+	    	# LOCAL(por enquanto não vou usar)
+	    	schedules.slice!(0)
         row[:schedules] << schedule
 	    end
 

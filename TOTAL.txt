@@ -1,8 +1,14 @@
+2017-2
+
 Total de turmas do Darcy: 7366
 Total de turmas Planaltina: 284
 Total de turmas Ceilândia: 526
 Total de turmas Gama: 480
 
 
+2018-1
 
-
+Total de turmas do Darcy: 9779 -- 34 min
+Total de turmas Planaltina: 288 -- 2 min
+Total de turmas Ceilândia: 543 -- 3 min
+Total de turmas Gama: 298 -- 2 min
