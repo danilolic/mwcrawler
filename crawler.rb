@@ -11,6 +11,27 @@ require 'json'
 # 3 - Ceilândia
 # 4 - Gama
 
+def format_hour(schedules, row)
+	while schedules.size != 0 do
+		schedule = []
+		schedule << schedules.slice!(0)
+		schedule << schedules.slice!(0)
+		schedule << schedules.slice!(0)
+		# RETIRANDO LIXO
+		schedules.slice!(0)
+		# LOCAL
+		schedule << schedules.slice!(0)
+		row << schedule
+	end
+end
+
+def format_teachers(teachers)
+	if teachers.size == 0
+		teachers = ["A Designar"]
+	end
+	teachers
+end
+
 def crawler(id_campus, file_name)
   # CADA TURMA SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
 	@rows = []
@@ -51,7 +72,8 @@ def crawler(id_campus, file_name)
 	  department 	 = page.css('#datatable tr:first-child a').text
 	  code 				 = page.css('#datatable')[0].css('tr:nth-child(2) td').text
 	  course  		 = page.css('#datatable')[0].css('tr:nth-child(3) td').text
-	  credits 		 = page.css('#datatable')[0].css('tr:nth-child(4) td').text
+		credits 		 = page.css('#datatable')[0].css('tr:nth-child(4) td').text
+
 	  page_classes.each_with_index do |cl, i|
 	    row = {}
 	    row[:department] = department
@@ -60,39 +82,29 @@ def crawler(id_campus, file_name)
 	    row[:credits] = credits
 			row[:name] = cl
 			row[:vacancies_total] = page.css('.tabela-oferta')[i]
-											.css('.tabela-vagas tr:nth-child(1) td:nth-child(3)').text
+																	.css('.tabela-vagas tr:nth-child(1) td:nth-child(3)').text
 			row[:vacancies_occupied] = page.css('.tabela-oferta')[i]
-											.css('.tabela-vagas tr:nth-child(2) td:nth-child(3)').text
+																		 .css('.tabela-vagas tr:nth-child(2) td:nth-child(3)').text
 
 			row[:vacancies_free] = page.css('.tabela-oferta')[i]
-											.css('.tabela-vagas tr:nth-child(3) td:nth-child(3)').text
+																 .css('.tabela-vagas tr:nth-child(3) td:nth-child(3)').text
 
-	    # FORMATA HORÁRIOS
-      schedules = page.css('.tabela-oferta')[i].css('tr td:nth-child(4) .table').css('td').map { |item| item.text }
+	    # HORÁRIOS
+			schedules = page.css('.tabela-oferta')[i]
+											.css('tr td:nth-child(4) .table')
+											.css('td').map { |item| item.text }
 
-      row[:schedules] = []
-	    while schedules.size != 0 do
-	    	schedule = []
-	    	schedule << schedules.slice!(0)
-	    	schedule << schedules.slice!(0)
-	    	schedule << schedules.slice!(0)
-	    	# RETIRANDO LIXO
-	    	schedules.slice!(0)
-	    	# LOCAL(por enquanto não vou usar)
-	    	schedules.slice!(0)
-        row[:schedules] << schedule
-	    end
+			row[:schedules] = []
+			format_hour(schedules, row[:schedules])
 
-	    # FORMATA PROFESSORES
+			# PROFESSORES
+			teachers = page.css('.tabela-oferta')[i]
+										 .css('tr td:nth-child(5) td')
+										 .map { |item| item.text }
+
 	    row[:teachers] = []
-      teachers = page.css('.tabela-oferta')[i]
-                       .css('tr td:nth-child(5) td')
-                       .map { |item| item.text }
-      if teachers.size == 0
-      	teachers = ["A Designar"]
-      end
+			row[:teachers] = format_teachers(teachers)
 
-      row[:teachers] = teachers
 	    @rows << row
 	    class_count = class_count + 1
 	    classes = class_count
