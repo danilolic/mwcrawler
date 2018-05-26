@@ -4,58 +4,55 @@ require 'open-uri'
 require 'pry'
 require 'json'
 
+# DOMÍNIO
+SITE = 'https://matriculaweb.unb.br/graduacao/'
 
-# Lista os campi
-# 1 - Darcy Ribeiro
-# 2 - Planaltina
-# 3 - Ceilândia
-# 4 - Gama
-
-def format_hour(schedules, row)
+def format_hours(schedules, row)
 	while schedules.size != 0 do
 		schedule = []
-		schedule << schedules.slice!(0)
-		schedule << schedules.slice!(0)
-		schedule << schedules.slice!(0)
-		# RETIRANDO LIXO
-		schedules.slice!(0)
-		# LOCAL
-		schedule << schedules.slice!(0)
+		schedule << schedules.slice!(0) # DIA
+		schedule << schedules.slice!(0) # INÍCIO
+		schedule << schedules.slice!(0) # FIM
+		schedules.slice!(0) # RETIRANDO LIXO
+		schedule << schedules.slice!(0) # LOCAL
 		row << schedule
 	end
 end
 
 def format_teachers(teachers)
 	if teachers.size == 0
-		teachers = ["A Designar"]
+		teachers = ['A Designar']
 	end
 	teachers
 end
 
-def crawler(id_campus, file_name)
-  # CADA TURMA SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
-	@rows = []
+# DEPARTAMENTO OU CURSO
+def set_crawler(id_campus, mode)
+	search_mode = mode
 
-  # LISTA DE DEPARTAMENTOS (inicialmente vazia)
+  url = SITE + search_mode + id_campus.to_s
+  page = Nokogiri::HTML(open(url))
+end
+
+def crawler_classes(id_campus, file_name)
+	# CADA TURMA SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
+	rows = []
+
+	# LISTA DE DEPARTAMENTOS (inicialmente vazia)
 	dep_links = []
 
-  # LISTA DE MATÉRIAS (inicialmente vazia)
+	# LISTA DE MATÉRIAS (inicialmente vazia)
 	course_links = []
 
-  # DOMÍNIO
-	site = 'https://matriculaweb.unb.br/graduacao/'
-  # CAMPUS URI
-	campus_uri = 'oferta_dep.aspx?cod='
+	page = set_crawler(id_campus, 'oferta_dep.aspx?cod=')
 
-  url = site + campus_uri + id_campus.to_s
-  page = Nokogiri::HTML(open(url))
   dep_links = page.css('#datatable tbody tr td:nth-child(3) a')
                   .map { |link| link['href'] }
 
 
   # ITERA SOBRE TODOS OS DEPARTAMENTOS PEGANDO TODAS AS MATÉRIAS
 	dep_links.each do |dep_link|
-	  url = site + dep_link
+	  url = SITE + dep_link
 	  page = Nokogiri::HTML(open(url))
     course_links << page.css('#datatable tr td:nth-child(2) a')
                         .map { |link| link['href'] }
@@ -66,7 +63,7 @@ def crawler(id_campus, file_name)
 	class_count = 0
   # ITERA SOBRE TODAS AS MATÉRIAS PEGANDO TODAS AS TURNAS
 	course_links.each do |course_link|
-	  url = site + course_link
+	  url = SITE + course_link
 	  page = Nokogiri::HTML(open(url))
 	  page_classes = page.css('.tabela-oferta .turma').map { |item| item.text}
 	  department 	 = page.css('#datatable tr:first-child a').text
@@ -95,7 +92,7 @@ def crawler(id_campus, file_name)
 											.css('td').map { |item| item.text }
 
 			row[:schedules] = []
-			format_hour(schedules, row[:schedules])
+			format_hours(schedules, row[:schedules])
 
 			# PROFESSORES
 			teachers = page.css('.tabela-oferta')[i]
@@ -105,7 +102,7 @@ def crawler(id_campus, file_name)
 	    row[:teachers] = []
 			row[:teachers] = format_teachers(teachers)
 
-	    @rows << row
+	    rows << row
 	    class_count = class_count + 1
 	    classes = class_count
 	    puts "Total de turmas: #{classes}"
@@ -114,31 +111,54 @@ def crawler(id_campus, file_name)
 
   # ESCREVE O JSON
 	File.open(file_name, 'w+') do |f|
-    f.write @rows.to_json
+    f.write rows.to_json
+	end
+end
+
+def crawler_courses(id_campus, file_name)
+	page = set_crawler(id_campus,'curso_rel.aspx?cod=')
+	courses = page.css('#datatable tr td:nth-child(3) a').map { |item| item.text}
+	courses.uniq!
+	puts "Total de cursos: #{courses.count}"
+	# ESCREVE O JSON
+	File.open(file_name, 'w+') do |f|
+    f.write courses.to_json
 	end
 end
 
 def menu
-	puts 'Esolha o número do Campus que deseja fazer o Crawler'
-	puts 'Lista dos campi'
-	puts '1 - Darcy Ribeiro'
-	puts '2 - Planaltina'
-	puts '3 - Ceilândia'
-	puts '4 - Gama'
+	puts 'Escolha uma opção:'
+	puts '1 - Pega as turmas do Darcy Ribeiro'
+	puts '2 - Pega as turmas de Planaltina'
+	puts '3 - Pega as turmas de Ceilândia'
+	puts '4 - Pega as turmas do Gama'
+	puts '-------------------------------------------'
+	puts '5 - Pega os cursos do Darcy Ribeiro'
+	puts '6 - Pega os cursos do Planaltina'
+	puts '7 - Pega os cursos do Ceilândia'
+	puts '8 - Pega os cursos do Gama'
 
 	a = gets.to_i
 
 	case a
 	when 1
-    crawler(1, "darcy.json")
+    crawler_classes(1, 'darcy.json')
 	when 2
-    crawler(2, "planaltina.json")
+    crawler_classes(2, 'planaltina.json')
 	when 3
-    crawler(3, "ceilandia.json")
+    crawler_classes(3, 'ceilandia.json')
 	when 4
-    crawler(4, "gama.json")
+		crawler_classes(4, 'gama.json')
+	when 5
+		crawler_courses(1, 'darcy_courses.json')
+	when 6
+		crawler_courses(2, 'planaltina_courses.json')
+	when 7
+		crawler_courses(3, 'ceilandia_courses.json')
+	when 8
+		crawler_courses(4, 'gama_courses.json')
 	else
-	  system "clear" or system "cls"
+	  system 'clear' or system 'cls'
 	  menu
 	end
 end
