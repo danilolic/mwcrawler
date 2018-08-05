@@ -8,30 +8,34 @@ require 'json'
 SITE = 'https://matriculaweb.unb.br/graduacao/'
 
 def format_hours(schedules, row)
-	while schedules.size != 0 do
+	while !schedules.empty? do
 		schedule = []
 		schedule << schedules.slice!(0) # DIA
-		schedule << schedules.slice!(0) # INÍCIO
-		schedule << schedules.slice!(0) # FIM
+		schedule << schedules.slice!(0) # HORÁRIO DE INÍCIO
+		schedule << schedules.slice!(0) # HORÁRIO DE FIM
 		schedules.slice!(0) # RETIRANDO LIXO
-		schedule << schedules.slice!(0) # LOCAL
+		schedule << schedules.slice!(0) # LOCAL DA AULA
 		row << schedule
 	end
 end
 
 def format_teachers(teachers)
-	if teachers.size == 0
-		teachers = ['A Designar']
-	end
+	teachers = ['A Designar'] if teachers.empty?
 	teachers
 end
 
-# DEPARTAMENTO OU CURSO
+# MODE: TURMAS OU CURSOS
 def set_crawler(id_campus, mode)
 	search_mode = mode
 
   url = SITE + search_mode + id_campus.to_s
   page = Nokogiri::HTML(open(url))
+end
+
+def write_json(file_name, object)
+	File.open(file_name, 'w+') do |f|
+    f.write object.to_json
+	end
 end
 
 def crawler_classes(id_campus, file_name)
@@ -61,7 +65,7 @@ def crawler_classes(id_campus, file_name)
   # CONTADORES
 	classes = 0
 	class_count = 0
-  # ITERA SOBRE TODAS AS MATÉRIAS PEGANDO TODAS AS TURNAS
+  # ITERA SOBRE TODAS AS MATÉRIAS PEGANDO TODAS AS TURMAS
 	course_links.each do |course_link|
 	  url = SITE + course_link
 	  page = Nokogiri::HTML(open(url))
@@ -101,7 +105,6 @@ def crawler_classes(id_campus, file_name)
 
 	    row[:teachers] = []
 			row[:teachers] = format_teachers(teachers)
-
 	    rows << row
 	    class_count = class_count + 1
 	    classes = class_count
@@ -109,10 +112,7 @@ def crawler_classes(id_campus, file_name)
 	  end
 	end
 
-  # ESCREVE O JSON
-	File.open(file_name, 'w+') do |f|
-    f.write rows.to_json
-	end
+	write_json(file_name, rows)
 end
 
 def crawler_courses(id_campus, file_name)
@@ -120,10 +120,8 @@ def crawler_courses(id_campus, file_name)
 	courses = page.css('#datatable tr td:nth-child(3) a').map { |item| item.text}
 	courses.uniq!
 	puts "Total de cursos: #{courses.count}"
-	# ESCREVE O JSON
-	File.open(file_name, 'w+') do |f|
-    f.write courses.to_json
-	end
+
+	write_json(file_name, courses)
 end
 
 def menu
