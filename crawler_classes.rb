@@ -10,7 +10,7 @@ def crawler_classes(id_campus, file_name)
 	# LISTA DE MATÉRIAS (inicialmente vazia)
 	course_links = []
 
-	page = set_crawler(id_campus, 'oferta_dep.aspx?cod=')
+	page = set_crawler(id_campus, 'graduacao/oferta_dep.aspx?cod=')
 
   dep_links = page.css('#datatable tbody tr td:nth-child(3) a')
                   .map { |link| link['href'] }

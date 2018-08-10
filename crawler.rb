@@ -8,7 +8,7 @@ require './crawler_classes'
 require './crawler_courses'
 
 # DOMÍNIO
-SITE = 'https://matriculaweb.unb.br/graduacao/'
+SITE = 'https://matriculaweb.unb.br/'
 
 def menu
   puts 'Escolha uma opção:'
