@@ -11,40 +11,40 @@ require './crawler_courses'
 SITE = 'https://matriculaweb.unb.br/graduacao/'
 
 def menu
-	puts 'Escolha uma opção:'
-	puts '1 - Pega as turmas do Darcy Ribeiro'
-	puts '2 - Pega as turmas de Planaltina'
-	puts '3 - Pega as turmas de Ceilândia'
-	puts '4 - Pega as turmas do Gama'
-	puts '-------------------------------------------'
-	puts '5 - Pega os cursos do Darcy Ribeiro'
-	puts '6 - Pega os cursos do Planaltina'
-	puts '7 - Pega os cursos do Ceilândia'
-	puts '8 - Pega os cursos do Gama'
+  puts 'Escolha uma opção:'
+  puts '1 - Pegar as turmas do Darcy Ribeiro'
+  puts '2 - Pegar as turmas de Planaltina'
+  puts '3 - Pegar as turmas de Ceilândia'
+  puts '4 - Pegar as turmas do Gama'
+  puts '-------------------------------------------'
+  puts '5 - Pegar os cursos do Darcy Ribeiro'
+  puts '6 - Pegar os cursos do Planaltina'
+  puts '7 - Pegar os cursos do Ceilândia'
+  puts '8 - Pegar os cursos do Gama'
 
-	a = gets.to_i
+  a = gets.to_i
 
-	case a
-	when 1
+  case a
+  when 1
     crawler_classes(1, 'darcy.json')
-	when 2
+  when 2
     crawler_classes(2, 'planaltina.json')
-	when 3
+  when 3
     crawler_classes(3, 'ceilandia.json')
-	when 4
-		crawler_classes(4, 'gama.json')
-	when 5
-		crawler_courses(1, 'darcy_courses.json')
-	when 6
-		crawler_courses(2, 'planaltina_courses.json')
-	when 7
-		crawler_courses(3, 'ceilandia_courses.json')
-	when 8
-		crawler_courses(4, 'gama_courses.json')
-	else
-	  system 'clear' or system 'cls'
-	  menu
-	end
+  when 4
+    crawler_classes(4, 'gama.json')
+  when 5
+    crawler_courses(1, 'darcy_courses.json')
+  when 6
+    crawler_courses(2, 'planaltina_courses.json')
+  when 7
+    crawler_courses(3, 'ceilandia_courses.json')
+  when 8
+    crawler_courses(4, 'gama_courses.json')
+  else
+    system 'clear' or system 'cls'
+    menu
+  end
 end
 
 menu
