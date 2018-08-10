@@ -10,12 +10,13 @@ def crawler_courses(id_campus, file_name)
 
 	while !courses.empty? do
 		row = {}
-		row['type'] = courses.slice!(0)
-		row['code'] = courses.slice!(0)
-		row['name'] = courses.slice!(0)
-		row['shift'] = courses.slice!(0)
+		row['curriculums'] = []
+		row['type'] = courses.shift
+		row['code'] = courses.shift
+		row['name'] = courses.shift
+		row['shift'] = courses.shift
 		rows << row
-		crawler_curriculum(row['code'])
+		row['curriculums'] = crawler_curriculum(row['code'])
 	end
 
 	puts "Total de cursos: #{rows.count}"
