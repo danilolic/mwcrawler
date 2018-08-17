@@ -4,121 +4,61 @@ require 'open-uri'
 require 'pry'
 require 'json'
 
+require './crawler_classes'
+require './crawler_courses'
+require './crawler_departments'
 
-# Lista os campi
-# 1 - Darcy Ribeiro
-# 2 - Planaltina
-# 3 - Ceilândia muita treta
-# 4 - Gama
-
-def crawler(id_campus, file_name)
-  # CADA TURMA SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
-	@rows = []
-
-  # LISTA DE DEPARTAMENTOS (inicialmente vazia)
-	dep_links = []
-
-  # LISTA DE MATÉRIAS (inicialmente vazia)
-	course_links = []
-
-  # DOMÍNIO
-	site = 'https://matriculaweb.unb.br/graduacao/'
-  # CAMPUS URI
-	campus_uri = 'oferta_dep.aspx?cod='
-
-  url = site + campus_uri + id_campus.to_s
-  page = Nokogiri::HTML(open(url))
-  dep_links = page.css('#datatable tbody tr td:nth-child(3) a')
-                  .map { |link| link['href'] }
-
-
-  # ITERA SOBRE TODOS OS DEPARTAMENTOS PEGANDO TODAS AS MATÉRIAS
-	dep_links.each do |dep_link|
-	  url = site + dep_link
-	  page = Nokogiri::HTML(open(url))
-    course_links << page.css('#datatable tr td:nth-child(2) a')
-                        .map { |link| link['href'] }
-	end
-	course_links.flatten!
-  # CONTADORES
-	classes = 0
-	class_count = 0
-  # ITERA SOBRE TODAS AS MATÉRIAS PEGANDO TODAS AS TURNAS
-	course_links.each do |course_link|
-	  url = site + course_link
-	  page = Nokogiri::HTML(open(url))
-	  page_classes = page.css('.tabela-oferta .turma').map { |item| item.text}
-	  department 	 = page.css('#datatable tr:first-child a').text
-	  code 				 = page.css('#datatable')[0].css('tr:nth-child(2) td').text
-	  course  		 = page.css('#datatable')[0].css('tr:nth-child(3) td').text
-	  credits 		 = page.css('#datatable')[0].css('tr:nth-child(4) td').text
-
-	  page_classes.each_with_index do |cl, i|
-	    row = {}
-	    row[:department] = department
-	    row[:code] = code
-	    row[:course] = course
-	    row[:credits] = credits
-	    row[:name] = cl
-	    # FORMATA HORÁRIOS
-      schedules = page.css('.tabela-oferta')[i]
-                      .css('tr td:nth-child(4) table tr:first-child td')
-                      .map { |item| item.text }
-      row[:schedules] = []
-	    while schedules.size != 0 do
-	    	schedule = []
-	    	schedule << schedules.slice!(0)
-	    	schedule << schedules.slice!(0)
-	    	schedule << schedules.slice!(0)
-        row[:schedules] << schedule.join(' ')
-	    end
-	    # FORMATA PROFESSORES
-      teachers = page.css('.tabela-oferta')[i]
-                     .css('tr td:nth-child(5) td')
-                     .map { |item| item.text }
-	    row[:teachers] = []
-	    teacher = {}
-	    while teachers.size != 0 do
-	    	teacher[:name] = teachers.slice!(0)
-	    	row[:teachers] << teacher
-	    end
-
-	    @rows << row
-	    class_count = class_count + 1
-	    classes = class_count
-	    puts "Total de turmas: #{classes}"
-	  end
-	end
-
-  # ESCREVE O JSON
-	File.open(file_name, 'w+') do |f|
-    f.write @rows.to_json
-	end
-end
+# DOMÍNIO
+SITE = 'https://matriculaweb.unb.br/'
 
 def menu
-	puts 'Esolha o número do Campus que deseja fazer o Crawler'
-	puts 'Lista dos campi'
-	puts '1 - Darcy Ribeiro'
-	puts '2 - Planaltina'
-	puts '3 - Ceilândia'
-	puts '4 - Gama'
+  puts 'Escolha uma opção:'
+  puts '1 - Pegar as turmas do Darcy Ribeiro'
+  puts '2 - Pegar as turmas de Planaltina'
+  puts '3 - Pegar as turmas da Ceilândia'
+  puts '4 - Pegar as turmas do Gama'
+  puts '-------------------------------------------'
+  puts '5 - Pegar os cursos do Darcy Ribeiro'
+  puts '6 - Pegar os cursos de Planaltina'
+  puts '7 - Pegar os cursos da Ceilândia'
+  puts '8 - Pegar os cursos do Gama'
+  puts '-------------------------------------------'
+  puts '9 - Pegar os departamentos do Darcy Ribeiro'
+  puts '10 - Pegar os departamentos de Planaltina'
+  puts '11 - Pegar os departamentos da Ceilândia'
+  puts '12 - Pegar os departamentos do Gama'
 
-	a = gets.to_i
+  a = gets.to_i
 
-	case a
-	when 1
-    crawler(1, "darcy.json")
-	when 2
-    crawler(2, "planaltina.json")
-	when 3
-    crawler(3, "ceilandia.json")
-	when 4
-    crawler(4, "gama.json")
-	else
-	  system "clear" or system "cls"
-	  menu
-	end
+  case a
+  when 1
+    crawler_classes(1, 'darcy.json')
+  when 2
+    crawler_classes(2, 'planaltina.json')
+  when 3
+    crawler_classes(3, 'ceilandia.json')
+  when 4
+    crawler_classes(4, 'gama.json')
+  when 5
+    crawler_courses(1, 'darcy_courses.json')
+  when 6
+    crawler_courses(2, 'planaltina_courses.json')
+  when 7
+    crawler_courses(3, 'ceilandia_courses.json')
+  when 8
+    crawler_courses(4, 'gama_courses.json')
+  when 9
+    crawler_departments(1, 'darcy_departments.json')
+  when 10
+    crawler_departments(2, 'planaltina_departments.json')
+  when 11
+    crawler_departments(3, 'ceilandia_departments.json')
+  when 12
+    crawler_departments(4, 'gama_departments.json')
+  else
+    system 'clear' or system 'cls'
+    menu
+  end
 end
 
 menu
