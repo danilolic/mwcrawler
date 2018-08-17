@@ -15,8 +15,8 @@ def crawler_courses(id_campus, file_name)
 		row['code'] = courses.shift
 		row['name'] = courses.shift
 		row['shift'] = courses.shift
-		rows << row
 		row['curriculums'] = crawler_curriculum(row['code'])
+		rows << row
 	end
 
 	puts "Total de cursos: #{rows.count}"
