@@ -18,7 +18,7 @@ def crawler_classes(id_campus, file_name)
 
   # ITERA SOBRE TODOS OS DEPARTAMENTOS PEGANDO TODAS AS MATÉRIAS
 	dep_links.each do |dep_link|
-	  url = SITE + dep_link
+	  url = SITE + "graduacao/" + dep_link
 	  page = Nokogiri::HTML(open(url))
     course_links << page.css('#datatable tr td:nth-child(2) a')
                         .map { |link| link['href'] }
@@ -29,14 +29,13 @@ def crawler_classes(id_campus, file_name)
 	class_count = 0
   # ITERA SOBRE TODAS AS MATÉRIAS PEGANDO TODAS AS TURMAS
 	course_links.each do |course_link|
-	  url = SITE + course_link
+	  url = SITE + "graduacao/" + course_link
 	  page = Nokogiri::HTML(open(url))
 	  page_classes = page.css('.tabela-oferta .turma').map { |item| item.text}
 	  department 	 = page.css('#datatable tr:first-child a').text
 	  code 				 = page.css('#datatable')[0].css('tr:nth-child(2) td').text
 	  course  		 = page.css('#datatable')[0].css('tr:nth-child(3) td').text
 		credits 		 = page.css('#datatable')[0].css('tr:nth-child(4) td').text
-
 	  page_classes.each_with_index do |cl, i|
 	    row = {}
 	    row[:department] = department
