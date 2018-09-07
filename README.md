@@ -8,7 +8,13 @@ Bibliotecas usadas:
  * [json](https://rubygems.org/gems/json/versions/1.8.3?locale=pt-BR): Converter para JSON
 
 # configuração
-Uma vez que tenha o ruby 2.5.1 instalado, para obter a gemas digite no seu terminal:
+Uma vez que tenha o ruby 2.5.1 instalado é necessário instalar o bundler para resolver sa dependencias:
+
+```bash
+gem install bundler
+```
+
+Após instalar o bundler para obter as gemas digite no seu terminal:
 
 ```bash
 bundle install
