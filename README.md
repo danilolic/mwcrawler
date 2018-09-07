@@ -7,16 +7,17 @@ Bibliotecas usadas:
  * [Pry](https://github.com/pry/pry): Ferramenta de debug
  * [json](https://rubygems.org/gems/json/versions/1.8.3?locale=pt-BR): Converter para JSON
 
-Uma vez que tenha o ruby instalado, para obter a gemas digite no seu terminal:
+# configuração
+Uma vez que tenha o ruby 2.5.1 instalado, para obter a gemas digite no seu terminal:
 
 ```bash
-
-gem install nokogiri
-gem install pry
+bundle install
 ```
-Open-uri é uma biblioteca nativa do Ruby, não há a necessidade de instalação.
 
-Certifique-se que tenha o ruby e as gemas instaladas na sua máquina
+O bundle cuidará de instalar todas as dependencias.
+
+# Execução
+Certifique-se que tenha o versão correta do ruby(2.5.1) e instalou as gemas com bundle.
 
 Rode o programa no seu terminal com o comando:
 
