@@ -6,12 +6,12 @@ require "mwcrawler/version"
 Gem::Specification.new do |spec|
   spec.name          = "mwcrawler"
   spec.version       = Mwcrawler::VERSION
-  spec.authors       = ["vitor pontes"]
+  spec.authors       = ["Danilo de Lima","vitor pontes"]
   spec.email         = ["vitormax2005@hotmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Gema para webscrapping do sistemas de matriculas da unb Matricula Web.}
+  spec.description   = %q{Essa gema provê uma api ruby para se fazer o scrapping de páginas html do sistema matricula web e retornar um conteudo que pode ser mais facilmente processado pelo programa}
+  spec.homepage      = "https://github.com/danilodelyima/mwcrawler"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
