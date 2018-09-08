@@ -1,6 +1,3 @@
-require './helpers'
-require './crawler_curriculum'
-
 def crawler_courses(id_campus, file_name)
 	# CADA CURSO SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
 	rows = []

@@ -1,5 +1,3 @@
-require './helpers'
-
 def crawler_curriculum(code)
   rows = []
   page = set_crawler(code,'graduacao/curso_dados.aspx?cod=')

@@ -3,7 +3,7 @@ RSpec.describe Mwcrawler do
     expect(Mwcrawler::VERSION).not_to be nil
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  it "crawls" do
+    Mwcrawler::Crawler.new.start(2)
   end
 end

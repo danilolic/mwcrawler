@@ -1,5 +1,3 @@
-require './helpers'
-
 def crawler_departments(id_campus, file_name)
   # CADA DEPARTAMENTO SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODOS OS DEPARTAMENTOS
   rows = []

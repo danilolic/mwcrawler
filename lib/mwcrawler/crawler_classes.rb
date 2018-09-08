@@ -1,5 +1,3 @@
-require './helpers'
-
 def crawler_classes(id_campus, file_name)
 	# CADA TURMA SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
 	rows = []
