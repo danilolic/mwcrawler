@@ -30,5 +30,9 @@ module Mwcrawler
 		    f.write object.to_json
 			end
 		end
+
+		def self.log(msg)
+			puts msg if false
+		end
 	end
 end

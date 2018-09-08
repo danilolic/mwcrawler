@@ -28,15 +28,15 @@ module Mwcrawler
     when 3
       Classes.scrap(3, 'ceilandia.json')
     when 4
-      crawler_classes(4, 'gama.json')
+      Classes.scrap(4, 'gama.json')
     when 5
-      crawler_courses(1, 'darcy_courses.json')
+      Courses.scrap(1, 'darcy_courses.json')
     when 6
-      crawler_courses(2, 'planaltina_courses.json')
+      Courses.scrap(2, 'planaltina_courses.json')
     when 7
-      crawler_courses(3, 'ceilandia_courses.json')
+      Courses.scrap(3, 'ceilandia_courses.json')
     when 8
-      crawler_courses(4, 'gama_courses.json')
+      Courses.scrap(4, 'gama_courses.json')
     when 9
       crawler_departments(1, 'darcy_departments.json')
     when 10
