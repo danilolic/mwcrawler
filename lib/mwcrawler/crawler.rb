@@ -38,13 +38,13 @@ module Mwcrawler
     when 8
       Courses.scrap(4, 'gama_courses.json')
     when 9
-      crawler_departments(1, 'darcy_departments.json')
+      Departments.scrap(1, 'darcy_departments.json')
     when 10
-      crawler_departments(2, 'planaltina_departments.json')
+      Departments.scrap(2, 'planaltina_departments.json')
     when 11
-      crawler_departments(3, 'ceilandia_departments.json')
+      Departments.scrap(3, 'ceilandia_departments.json')
     when 12
-      crawler_departments(4, 'gama_departments.json')
+      Departments.scrap(4, 'gama_departments.json')
     end
   end
 end

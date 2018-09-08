@@ -16,4 +16,18 @@ RSpec.describe Mwcrawler do
       expect(courses.first.keys).to include("curriculums", "type", "code", "name", "shift")
     end
   end
+
+  describe "Departments" do
+    [9, 10, 11, 12].each do |option|
+      subject(:department) { Mwcrawler::Crawler.new.start(option).first }
+
+      it "has the correct keys" do
+        expect(department.keys).to include("code", "acronym", "name")
+      end
+
+      it { expect(department["code"]).to be_a_kind_of String }
+      it { expect(department["acronym"]).to be_a_kind_of String }
+      it { expect(department["name"]).to be_a_kind_of String }
+    end
+  end
 end

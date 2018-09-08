@@ -22,8 +22,7 @@ module Mwcrawler
 
 			Helpers.log "Total de cursos: #{rows.count}"
 
-			# Helpers.write_json(file_name, rows)
-			return rows
+			rows
 		end
 	end
 end

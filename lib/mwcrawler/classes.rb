@@ -74,8 +74,7 @@ module Mwcrawler
 			  end
 			end
 
-			# Helpers.write_json(file_name, rows)
-			return rows
+			rows
 		end
 	end
 end

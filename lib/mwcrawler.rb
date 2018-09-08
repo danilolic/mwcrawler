@@ -6,7 +6,7 @@ require 'json'
 
 require 'mwcrawler/classes'
 require 'mwcrawler/courses'
-require 'mwcrawler/crawler_departments'
+require 'mwcrawler/departments'
 require 'mwcrawler/helpers'
 require 'mwcrawler/crawler'
 
