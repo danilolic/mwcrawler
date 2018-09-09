@@ -21,6 +21,21 @@ module Mwcrawler
     end
   end
 
+  # Options module
+  module Options
+    module_function
+
+    @log = false
+
+    def init(options = { log: false })
+      @log = options[:log].freeze
+    end
+
+    def log_enabled?
+      @log
+    end
+  end
+
   # Helper methods used throughout the lib
   class Helpers
     def self.format_hours(schedules, row = [])
@@ -44,7 +59,7 @@ module Mwcrawler
     def self.set_crawler(id, search_mode, options = { exact: false })
       id = Campuses.id id unless options[:exact]
       url = SITE + search_mode + id.to_s
-      Nokogiri::HTML(open(url))
+      Nokogiri::HTML(URI.open(url))
     end
 
     def self.write_json(file_name, object)
@@ -54,7 +69,7 @@ module Mwcrawler
     end
 
     def self.log(msg)
-      puts msg if false
+      puts msg if Options.log_enabled?
     end
   end
 end
