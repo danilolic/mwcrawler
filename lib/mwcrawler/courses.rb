@@ -2,7 +2,7 @@ require 'mwcrawler/curriculum'
 
 module Mwcrawler
 	module Courses
-		def self.scrap(id_campus, file_name)
+		def self.scrap(id_campus)
 			# CADA CURSO SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
 			rows = []
 

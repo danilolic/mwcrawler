@@ -1,6 +1,6 @@
 module Mwcrawler
 	module Classes
-		def self.scrap(id_campus, file_name)
+		def self.scrap(id_campus)
 			# CADA TURMA SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
 			rows = []
 

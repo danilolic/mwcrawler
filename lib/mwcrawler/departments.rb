@@ -1,6 +1,6 @@
 module Mwcrawler
   module Departments
-    def self.scrap(id_campus, file_name)
+    def self.scrap(id_campus)
       # CADA DEPARTAMENTO SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODOS OS DEPARTAMENTOS
       rows = []
 

@@ -22,29 +22,29 @@ module Mwcrawler
 
     case option
     when 1
-      Classes.scrap(1, 'darcy.json')
+      Classes.scrap(1)
     when 2
-      Classes.scrap(2, 'planaltina.json')
+      Classes.scrap(2)
     when 3
-      Classes.scrap(3, 'ceilandia.json')
+      Classes.scrap(3)
     when 4
-      Classes.scrap(4, 'gama.json')
+      Classes.scrap(4)
     when 5
-      Courses.scrap(1, 'darcy_courses.json')
+      Courses.scrap(1)
     when 6
-      Courses.scrap(2, 'planaltina_courses.json')
+      Courses.scrap(2)
     when 7
-      Courses.scrap(3, 'ceilandia_courses.json')
+      Courses.scrap(3)
     when 8
-      Courses.scrap(4, 'gama_courses.json')
+      Courses.scrap(4)
     when 9
-      Departments.scrap(1, 'darcy_departments.json')
+      Departments.scrap(1)
     when 10
-      Departments.scrap(2, 'planaltina_departments.json')
+      Departments.scrap(2)
     when 11
-      Departments.scrap(3, 'ceilandia_departments.json')
+      Departments.scrap(3)
     when 12
-      Departments.scrap(4, 'gama_departments.json')
+      Departments.scrap(4)
     end
   end
 end
