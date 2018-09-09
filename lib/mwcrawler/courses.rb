@@ -2,11 +2,11 @@ require 'mwcrawler/curriculum'
 
 module Mwcrawler
 	module Courses
-		def self.scrap(id_campus)
+		def self.scrap(campus)
 			# CADA CURSO SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
 			rows = []
 
-			page = Helpers.set_crawler(id_campus,'graduacao/curso_rel.aspx?cod=')
+			page = Helpers.set_crawler(campus,'graduacao/curso_rel.aspx?cod=')
 			courses = page.css('#datatable tr td').map { |item| item.text }
 
 			while !courses.empty? do

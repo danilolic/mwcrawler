@@ -1,6 +1,6 @@
 module Mwcrawler
 	module Classes
-		def self.scrap(id_campus)
+		def self.scrap(campus)
 			# CADA TURMA SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
 			rows = []
 
@@ -10,7 +10,7 @@ module Mwcrawler
 			# LISTA DE MATÉRIAS (inicialmente vazia)
 			course_links = []
 
-			page = Helpers.set_crawler(id_campus, 'graduacao/oferta_dep.aspx?cod=')
+			page = Helpers.set_crawler(campus, 'graduacao/oferta_dep.aspx?cod=')
 
 		  dep_links = page.css('#datatable tbody tr td:nth-child(3) a')
 		                  .map { |link| link['href'] }

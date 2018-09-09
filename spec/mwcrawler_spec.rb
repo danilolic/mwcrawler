@@ -4,10 +4,10 @@ RSpec.describe Mwcrawler do
   end
 
   describe "Classes scrap" do
-    [1, 2, 3, 4].each do |option|
-      context "Classes option: #{option}" do
+    Mwcrawler::CAMPUSES.each do |campus, _campus_id|
+      context "Classes campus: #{campus}" do
         before :all do
-          @classes = Mwcrawler::Crawler.new.start(option)
+          @classes = Mwcrawler::Crawler.new.classes(campus)
         end
 
         it "crawls classes" do
@@ -18,12 +18,12 @@ RSpec.describe Mwcrawler do
   end
 
   describe "Courses scrap" do
-    [[5, 99], [6, 5], [7, 6], [8, 6]].each do |option, expected_course_count|
+    [[:darcy_ribeiro, 99], [:planaltina, 5], [:ceilandia, 6], [:gama, 6]].each do |option, expected_course_count|
       context "Courses option: #{option}" do
         let(:course) { @courses.first }
 
         before :all do
-          @courses = Mwcrawler::Crawler.new.start(option)
+          @courses = Mwcrawler::Crawler.new.courses(option)
         end
 
         it "has the correct keys" do
@@ -36,12 +36,12 @@ RSpec.describe Mwcrawler do
   end
 
   describe "Departments scrap" do
-    [9, 10, 11, 12].each do |option|
-      context "Departments option: #{option}" do
+    Mwcrawler::CAMPUSES.each do |campus, _campus_id|
+      context "Departments campus: #{campus}" do
         subject(:department) { @departments.first }
 
         before :all do
-          @departments = Mwcrawler::Crawler.new.start(option)
+          @departments = Mwcrawler::Crawler.new.departments(campus)
         end
 
         it "has the correct keys" do

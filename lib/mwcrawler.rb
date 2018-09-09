@@ -15,8 +15,16 @@ module Mwcrawler
   class Crawler
     include Mwcrawler
 
-    def start(option)
-      menu option
+    def courses(campus = :darcy_ribeiro)
+      Courses.scrap campus
+    end
+
+    def classes(campus = :darcy_ribeiro)
+      Classes.scrap campus
+    end
+
+    def departments(campus = :darcy_ribeiro)
+      Departments.scrap campus
     end
   end
 end

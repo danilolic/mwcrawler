@@ -1,4 +1,11 @@
 module Mwcrawler
+	CAMPUSES = {
+		darcy_ribeiro: 1,
+		planaltina: 2,
+		ceilandia: 3,
+		gama: 4
+	}.freeze
+
 	class Helpers
 		def self.format_hours(schedules, row)
 			while !schedules.empty? do
@@ -18,10 +25,10 @@ module Mwcrawler
 		end
 
 		# MODE: TURMAS, CURSOS OU CURRÍCULO
-		def self.set_crawler(id, mode)
+		def self.set_crawler(campus, mode)
 			search_mode = mode
-
-		  url = SITE + search_mode + id.to_s
+			campus_id = CAMPUSES[campus]
+		  url = SITE + search_mode + campus_id.to_s
 		  page = Nokogiri::HTML(open(url))
 		end
 

@@ -1,10 +1,10 @@
 module Mwcrawler
   module Departments
-    def self.scrap(id_campus)
+    def self.scrap(campus)
       # CADA DEPARTAMENTO SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODOS OS DEPARTAMENTOS
       rows = []
 
-    	page = Helpers.set_crawler(id_campus,'graduacao/oferta_dep.aspx?cod=')
+    	page = Helpers.set_crawler(campus,'graduacao/oferta_dep.aspx?cod=')
       departments = page.css('#datatable tr td').map { |item| item.text }
 
       while !departments.empty?
