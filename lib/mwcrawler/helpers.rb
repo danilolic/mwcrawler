@@ -1,10 +1,21 @@
 module Mwcrawler
-	CAMPUSES = {
-		darcy_ribeiro: 1,
-		planaltina: 2,
-		ceilandia: 3,
-		gama: 4
-	}.freeze
+	class Campuses
+		CAMPUSES = {
+			darcy_ribeiro: 1,
+			planaltina: 2,
+			ceilandia: 3,
+			gama: 4
+		}.freeze
+
+	  def self.id(campus)
+			raise ArgumentError, "Campus: #{campus} not in: #{CAMPUSES.keys}" unless CAMPUSES.include? campus
+	    CAMPUSES[campus]
+	  end
+
+		def self.all
+			CAMPUSES
+		end
+	end
 
 	class Helpers
 		def self.format_hours(schedules, row)
@@ -25,10 +36,9 @@ module Mwcrawler
 		end
 
 		# MODE: TURMAS, CURSOS OU CURRÍCULO
-		def self.set_crawler(campus, mode)
-			search_mode = mode
-			campus_id = CAMPUSES[campus]
-		  url = SITE + search_mode + campus_id.to_s
+		def self.set_crawler(id, search_mode, options = {exact: false})
+			id = Campuses.id id unless options[:exact]
+		  url = SITE + search_mode + id.to_s
 		  page = Nokogiri::HTML(open(url))
 		end
 

@@ -4,7 +4,7 @@ RSpec.describe Mwcrawler do
   end
 
   describe "Classes scrap" do
-    Mwcrawler::CAMPUSES.each do |campus, _campus_id|
+    Mwcrawler::Campuses.all.each do |campus, _campus_id|
       context "Classes campus: #{campus}" do
         before :all do
           @classes = Mwcrawler::Crawler.new.classes(campus)
@@ -36,7 +36,7 @@ RSpec.describe Mwcrawler do
   end
 
   describe "Departments scrap" do
-    Mwcrawler::CAMPUSES.each do |campus, _campus_id|
+    Mwcrawler::Campuses.all.each do |campus, _campus_id|
       context "Departments campus: #{campus}" do
         subject(:department) { @departments.first }
 
@@ -52,6 +52,14 @@ RSpec.describe Mwcrawler do
         it { expect(department["acronym"]).to be_a_kind_of String }
         it { expect(department["name"]).to be_a_kind_of String }
       end
+    end
+  end
+
+  describe "Campuses id" do
+    context "when campus is invalid" do
+      subject(:campus_id) { Mwcrawler::Campuses.id(:invalid_campus)}
+
+      it { expect { campus_id }.to raise_error ArgumentError, /Campus: #{:invalid_campus} not in:/ }
     end
   end
 end
