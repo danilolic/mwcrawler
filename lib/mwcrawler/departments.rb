@@ -1,7 +1,7 @@
 module Mwcrawler
   module Departments
     def self.scrap(campus)
-      # CADA DEPARTAMENTO SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODOS OS DEPARTAMENTOS
+      # CADA DEPARTAMENTO SERA UMA LINHA, ENTAO rows E O CONJUNTO DE TODOS OS DEPARTAMENTOS
       rows = []
 
       page = Helpers.set_crawler(campus, 'graduacao/oferta_dep.aspx?cod=')
