@@ -1,8 +1,6 @@
 # Mwcrawler
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/mwcrawler`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Mwcrawler is a gem for parsing UnB's Matricula Web data into consumable hashes.
 
 ## Installation
 
@@ -22,7 +20,36 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First instantiate a new crawler `crawler = Mwcrawler::Crawler.new` then you can crawl like so:
+```ruby
+courses_hash = crawler.courses
+# return example
+[{"type"=>"Presencial",
+  "code"=>"19",
+  "name"=>"ADMINISTRAÇÃO",
+  "shift"=>"Diurno",
+  "curriculums"=>
+   [{"name"=>"Administração",
+     "degree"=>"Bacharel",
+     "semester_max"=>"8",
+     "semester_min"=>"16",
+     "credits"=>"200"}]},
+ {"type"=>"Presencial",
+  "code"=>"701",
+  "name"=>"ADMINISTRAÇÃO",
+  "shift"=>"Noturno",
+  "curriculums"=>
+   [{"name"=>"Administração",
+     "degree"=>"Bacharel",
+     "semester_max"=>"8",
+     "semester_min"=>"16",
+     "credits"=>"200"}]}
+]
+```
+The crawled campus by default is `:darcy_ribeiro` campus,
+but you can specify another `crawler.classes(:planaltina)`.
+
+The available resources are `classes`, `courses` and `departments`. Also you can choose from any of the four campuses `:darcy_ribeiro`, `:planaltina`, `:ceilandia` and `:gama`
 
 ## Development
 
