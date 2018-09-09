@@ -2,7 +2,7 @@ module Mwcrawler
   module Curriculum
     def self.scrap(code)
       rows = []
-      page = Helpers.set_crawler(code,'graduacao/curso_dados.aspx?cod=', exact: true)
+      page = Helpers.set_crawler(code, 'graduacao/curso_dados.aspx?cod=', exact: true)
       curriculums = page.css('.table-responsive h4').map { |item| item.children[0].text }
       page.css('.table-responsive .table').each do |table|
         row = {}

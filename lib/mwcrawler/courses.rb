@@ -1,28 +1,28 @@
 require 'mwcrawler/curriculum'
 
 module Mwcrawler
-	module Courses
-		def self.scrap(campus)
-			# CADA CURSO SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
-			rows = []
+  module Courses
+    def self.scrap(campus)
+      # CADA CURSO SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODAS AS TURMAS
+      rows = []
 
-			page = Helpers.set_crawler(campus,'graduacao/curso_rel.aspx?cod=')
-			courses = page.css('#datatable tr td').map { |item| item.text }
+      page = Helpers.set_crawler(campus, 'graduacao/curso_rel.aspx?cod=')
+      courses = page.css('#datatable tr td').map(&:text)
 
-			while !courses.empty? do
-				row = {}
-				row['curriculums'] = []
-				row['type'] = courses.shift
-				row['code'] = courses.shift
-				row['name'] = courses.shift
-				row['shift'] = courses.shift
-				row['curriculums'] = Curriculum.scrap(row['code'])
-				rows << row
-			end
+      until courses.empty?
+        row = {}
+        row['curriculums'] = []
+        row['type'] = courses.shift
+        row['code'] = courses.shift
+        row['name'] = courses.shift
+        row['shift'] = courses.shift
+        row['curriculums'] = Curriculum.scrap(row['code'])
+        rows << row
+      end
 
-			Helpers.log "Total de cursos: #{rows.count}"
+      Helpers.log "Total de cursos: #{rows.count}"
 
-			rows
-		end
-	end
+      rows
+    end
+  end
 end

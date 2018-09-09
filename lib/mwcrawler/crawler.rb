@@ -1,24 +1,23 @@
 module Mwcrawler
   # DOMÍNIO
-  SITE = 'https://matriculaweb.unb.br/'
+  SITE = 'https://matriculaweb.unb.br/'.freeze
 
   def menu(option)
-     # Escolha uma opção:
-     # 1 - Pegar as turmas do Darcy Ribeiro
-     # 2 - Pegar as turmas de Planaltina
-     # 3 - Pegar as turmas da Ceilândia
-     # 4 - Pegar as turmas do Gama
-     # -------------------------------------------
-     # 5 - Pegar os cursos do Darcy Ribeiro
-     # 6 - Pegar os cursos de Planaltina
-     # 7 - Pegar os cursos da Ceilândia
-     # 8 - Pegar os cursos do Gama
-     # -------------------------------------------
-     # 9 - Pegar os departamentos do Darcy Ribeiro
-     # 10 - Pegar os departamentos de Planaltina
-     # 11 - Pegar os departamentos da Ceilândia
-     # 12 - Pegar os departamentos do Gama
-
+    # Escolha uma opção:
+    # 1 - Pegar as turmas do Darcy Ribeiro
+    # 2 - Pegar as turmas de Planaltina
+    # 3 - Pegar as turmas da Ceilândia
+    # 4 - Pegar as turmas do Gama
+    # -------------------------------------------
+    # 5 - Pegar os cursos do Darcy Ribeiro
+    # 6 - Pegar os cursos de Planaltina
+    # 7 - Pegar os cursos da Ceilândia
+    # 8 - Pegar os cursos do Gama
+    # -------------------------------------------
+    # 9 - Pegar os departamentos do Darcy Ribeiro
+    # 10 - Pegar os departamentos de Planaltina
+    # 11 - Pegar os departamentos da Ceilândia
+    # 12 - Pegar os departamentos do Gama
 
     case option
     when 1

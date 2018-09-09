@@ -4,10 +4,10 @@ module Mwcrawler
       # CADA DEPARTAMENTO SERÁ UMA LINHA, ENTÃO rows É O CONJUNTO DE TODOS OS DEPARTAMENTOS
       rows = []
 
-    	page = Helpers.set_crawler(campus,'graduacao/oferta_dep.aspx?cod=')
-      departments = page.css('#datatable tr td').map { |item| item.text }
+      page = Helpers.set_crawler(campus, 'graduacao/oferta_dep.aspx?cod=')
+      departments = page.css('#datatable tr td').map(&:text)
 
-      while !departments.empty?
+      until departments.empty?
         row = {}
         row['code'] = departments.shift
         row['acronym'] = departments.shift
