@@ -1,7 +1,8 @@
 module Mwcrawler
-	# DOMÍNIO
-	SITE = 'https://matriculaweb.unb.br/'.freeze
+  # DOMINIO
+  SITE = 'https://matriculaweb.unb.br/'.freeze
 
+  # Controls available campuses
   class Campuses
     CAMPUSES = {
       darcy_ribeiro: 1,
@@ -13,36 +14,37 @@ module Mwcrawler
     def self.id(campus)
       raise ArgumentError, "Campus: #{campus} not in: #{CAMPUSES.keys}" unless CAMPUSES.include? campus
       CAMPUSES[campus]
-     end
+    end
 
     def self.all
       CAMPUSES
     end
   end
 
+  # Helper methods used throughout the lib
   class Helpers
-    def self.format_hours(schedules, row)
+    def self.format_hours(schedules, row = [])
       until schedules.empty?
         schedule = []
         schedule << schedules.shift # DIA
-        schedule << schedules.shift # HORÁRIO DE INÍCIO
-        schedule << schedules.shift # HORÁRIO DE FIM
+        schedule << schedules.shift # HORARIO DE INICIO
+        schedule << schedules.shift # HORARIO DE FIM
         schedules.shift # RETIRANDO LIXO
         schedule << schedules.shift # LOCAL DA AULA
         row << schedule
       end
+      row
     end
 
     def self.format_teachers(teachers)
-      teachers = ['A Designar'] if teachers.empty?
-      teachers
+      teachers.empty? ? ['A Designar'] : teachers
     end
 
-    # MODE: TURMAS, CURSOS OU CURRÍCULO
+    # MODE: TURMAS, CURSOS OU CURRICULO
     def self.set_crawler(id, search_mode, options = { exact: false })
       id = Campuses.id id unless options[:exact]
       url = SITE + search_mode + id.to_s
-      page = Nokogiri::HTML(open(url))
+      Nokogiri::HTML(open(url))
     end
 
     def self.write_json(file_name, object)

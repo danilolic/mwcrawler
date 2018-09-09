@@ -10,6 +10,7 @@ require 'mwcrawler/departments'
 require 'mwcrawler/helpers'
 
 module Mwcrawler
+  # Main api for crawling
   class Crawler
     include Mwcrawler
 
