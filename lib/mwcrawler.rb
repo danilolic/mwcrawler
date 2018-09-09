@@ -8,7 +8,6 @@ require 'mwcrawler/classes'
 require 'mwcrawler/courses'
 require 'mwcrawler/departments'
 require 'mwcrawler/helpers'
-require 'mwcrawler/crawler'
 
 module Mwcrawler
   class Crawler
