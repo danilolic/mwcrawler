@@ -1,0 +1,10 @@
+AllCops:
+  Exclude:
+    - '*.gemspec'
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
