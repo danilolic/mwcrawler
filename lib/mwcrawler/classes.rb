@@ -23,7 +23,7 @@ module Mwcrawler
       course_links = []
       # ITERA SOBRE TODOS OS DEPARTAMENTOS PEGANDO TODAS AS MATERIAS
       dep_links.each do |dep_link|
-        page = Nokogiri::HTML(URI.open(SITE + dep_link))
+        page = Nokogiri::HTML(URI.open(SITE + 'graduacao/' + dep_link))
         course_links << page.css('#datatable tr td:nth-child(2) a')
                             .map { |link| link['href'] }
       end
@@ -32,7 +32,7 @@ module Mwcrawler
     private_class_method def self.scrap_classes(course_link)
       rows = []
 
-      page = Nokogiri::HTML(URI.open(SITE + course_link))
+      page = Nokogiri::HTML(URI.open(SITE + 'graduacao/' + course_link))
       page_classes = page.css('.tabela-oferta .turma').map(&:text)
 
       page_classes.each_with_index do |cl, i|
