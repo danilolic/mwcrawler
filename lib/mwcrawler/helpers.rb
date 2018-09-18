@@ -13,6 +13,7 @@ module Mwcrawler
 
     def self.id(campus)
       raise ArgumentError, "Campus: #{campus} not in: #{CAMPUSES.keys}" unless CAMPUSES.include? campus
+
       CAMPUSES[campus]
     end
 
