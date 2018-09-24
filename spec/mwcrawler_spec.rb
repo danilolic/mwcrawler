@@ -3,6 +3,22 @@ RSpec.describe Mwcrawler do
     expect(Mwcrawler::VERSION).not_to be nil
   end
 
+  describe 'Subjects scrap' do
+    Mwcrawler::Campuses.all.each do |campus, _campus_id|
+      context "Subjects campus: #{campus}" do
+        before :all do
+          VCR.use_cassette("subjects_#{campus}") do
+            @subjects = Mwcrawler::Crawler.new.subjects(campus)
+          end
+        end
+
+        it 'crawls subjects' do
+          expect(@subjects).to be_a_kind_of Array
+        end
+      end
+    end
+  end
+
   describe 'Classes scrap' do
     Mwcrawler::Campuses.all.each do |campus, _campus_id|
       context "Classes campus: #{campus}" do
