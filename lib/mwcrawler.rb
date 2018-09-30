@@ -30,9 +30,9 @@ module Mwcrawler
       Departments.scrap campus
     end
 
-    def subjects(campus = :darcy_ribeiro, options = { log: false })
+    def subjects(campus_or_id = :darcy_ribeiro, by_id = false, options = { log: false })
       Options.init(options)
-      Subjects.scrap campus
+      Subjects.scrap(campus_or_id, by_id)
     end
   end
 end
