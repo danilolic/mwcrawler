@@ -17,6 +17,18 @@ RSpec.describe Mwcrawler do
         end
       end
     end
+
+    context 'crawls subject by id' do
+      before :all do
+        VCR.use_cassette('subject_116441') do
+          @subject = Mwcrawler::Crawler.new.subjects('116441', {log:false, by_id: true})
+        end
+      end
+
+      it 'crawls subject by id' do
+        expect(@subject).to be_a_kind_of Hash
+      end
+    end
   end
 
   describe 'Classes scrap' do
