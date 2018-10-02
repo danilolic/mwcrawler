@@ -30,14 +30,22 @@ module Mwcrawler
       rows
     end
     private_class_method def self.class_row_init(page, name)
-      course_uri = page.css('#datatable')[0].css('tr:nth-child(3) td a').first['href']
-      credits = page.css('#datatable')[0].css('tr:nth-child(4) td').text.split('-').map(&:to_i)
-
       { department: page.css('#datatable tr:first-child a').text,
         code:  page.css('#datatable')[0].css('tr:nth-child(2) td').text.to_i,
-        course_code: Helpers.uri_query_params(course_uri)['cod'].to_i,
-        credits: { theory: credits[0], practical: credits[1], extension: credits[2], study: credits[3] },
+        course_code: scrap_course_code(page),
+        credits: scrap_credit_hash(page),
         name: name }
+    end
+
+    private_class_method def self.scrap_course_code(page)
+      course_uri = page.css('#datatable')[0].css('tr:nth-child(3) td a').first['href']
+      Helpers.uri_query_params(course_uri)['cod'].to_i
+    end
+
+    private_class_method def self.scrap_credit_hash(page)
+      credit_string = page.css('#datatable')[0].css('tr:nth-child(4) td').text
+      credits = credit_string.split('-').map(&:to_i)
+      { theory: credits[0], practical: credits[1], extension: credits[2], study: credits[3] }
     end
 
     private_class_method def self.scrap_row(row_init, page, count)
