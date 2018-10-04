@@ -44,7 +44,7 @@ GEM
       hashdiff
 
 PLATFORMS
-  ruby
+  ruby (2.5.1)
 
 DEPENDENCIES
   bundler (~> 1.16)
