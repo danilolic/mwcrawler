@@ -8,30 +8,7 @@ require 'mwcrawler/classes'
 require 'mwcrawler/courses'
 require 'mwcrawler/departments'
 require 'mwcrawler/helpers'
+require 'mwcrawler/crawler'
 
 module Mwcrawler
-  # Main api for crawling
-  class Crawler
-    include Mwcrawler
-
-    def courses(campus = :darcy_ribeiro, options = { log: false })
-      Options.init(options)
-      Courses.scrap campus
-    end
-
-    def classes(campus = :darcy_ribeiro, options = { log: false })
-      Options.init(options)
-      Classes.scrap campus
-    end
-
-    def departments(campus = :darcy_ribeiro, options = { log: false })
-      Options.init(options)
-      Departments.scrap campus
-    end
-
-    def semester
-      page = Nokogiri::HTML(URI.open('https://matriculaweb.unb.br/graduacao/default.aspx'))
-      page.css("a[title='Período Atual'] span").first.text
-    end
-  end
 end
