@@ -28,5 +28,10 @@ module Mwcrawler
       Options.init(options)
       Departments.scrap campus
     end
+
+    def semester
+      page = Nokogiri::HTML(URI.open('https://matriculaweb.unb.br/graduacao/default.aspx'))
+      page.css("a[title='Período Atual'] span").first.text
+    end
   end
 end
