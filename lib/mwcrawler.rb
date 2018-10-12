@@ -11,4 +11,6 @@ require 'mwcrawler/helpers'
 require 'mwcrawler/crawler'
 
 module Mwcrawler
+  # DOMINIO
+  SITE = 'https://matriculaweb.unb.br/'.freeze
 end
