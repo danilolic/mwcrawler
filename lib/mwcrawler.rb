@@ -19,9 +19,9 @@ module Mwcrawler
       Courses.scrap campus
     end
 
-    def classes(campus = :darcy_ribeiro, options = { log: false })
+    def classes(department, options = { log: false })
       Options.init(options)
-      Classes.scrap campus
+      Classes.scrap department
     end
 
     def departments(campus = :darcy_ribeiro, options = { log: false })
