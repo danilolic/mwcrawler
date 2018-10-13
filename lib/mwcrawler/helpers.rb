@@ -10,6 +10,7 @@ module Mwcrawler
 
     def self.id(campus)
       raise ArgumentError, "Campus: #{campus} not in: #{CAMPUSES.keys}" unless CAMPUSES.include? campus
+
       CAMPUSES[campus]
     end
 
@@ -56,7 +57,7 @@ module Mwcrawler
     def self.set_crawler(id, search_mode, options = { exact: false })
       id = Campuses.id id unless options[:exact]
       url = SITE + search_mode + id.to_s
-      Nokogiri::HTML(URI.open(url))
+      Nokogiri::HTML(URI.parse(url).open)
     end
 
     def self.write_json(file_name, object)
@@ -67,6 +68,11 @@ module Mwcrawler
 
     def self.log(msg)
       puts msg if Options.log_enabled?
+    end
+
+    def self.uri_query_params(uri)
+      query_string = URI.parse(uri).query
+      query_string.split('&').map { |param| param.split('=') }.to_h
     end
   end
 end
