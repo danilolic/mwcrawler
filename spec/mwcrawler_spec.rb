@@ -12,22 +12,40 @@ RSpec.describe Mwcrawler do
           end
         end
 
-        it 'crawls subjects' do
-          expect(@subjects).to be_a_kind_of Array
-        end
+        it { expect(@subjects).to be_a_kind_of Array }
+
+        it { expect(@subjects).not_to be nil }
+
+        it { expect(@subjects.first.keys).to include(:code, :department, :name, :level) }
+
+        it { expect(@subjects.first).to include(code: be_integer) }
+
+        it { expect(@subjects.first).to include(code: be_nonzero) }
+
+        it { expect(@subjects.first).to include(department: be_integer) }
+
+        it { expect(@subjects.first).to include(department: be_nonzero) }
       end
     end
 
     context 'crawls subject by id' do
       before :all do
         VCR.use_cassette('subject_116441') do
-          @subject = Mwcrawler::Crawler.new.subjects('116441', {log:false, by_id: true})
+          @subject = Mwcrawler::Crawler.new.subjects('116441', by_id: true)
         end
       end
 
-      it 'crawls subject by id' do
-        expect(@subject).to be_a_kind_of Hash
-      end
+      it { expect(@subject).to be_a_kind_of Hash }
+
+      it { expect(@subject.keys).to include(:code, :department, :name, :level) }
+
+      it { expect(@subject).to include(code: be_integer) }
+
+      it { expect(@subject).to include(code: be_nonzero) }
+
+      it { expect(@subject).to include(department: be_integer) }
+
+      it { expect(@subject).to include(department: be_nonzero) }
     end
   end
 
