@@ -1,7 +1,4 @@
 module Mwcrawler
-  # DOMINIO
-  SITE = 'https://matriculaweb.unb.br/'.freeze
-
   # Controls available campuses
   class Campuses
     CAMPUSES = {
