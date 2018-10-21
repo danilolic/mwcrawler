@@ -19,7 +19,7 @@ module Mwcrawler
     end
 
     def semester
-      page = Helpers.set_crawler(nil, 'graduacao/default.aspx', {exact: true})
+      page = Helpers.set_crawler(nil, 'graduacao/default.aspx', exact: true)
       page.css("a[title='Período Atual'] span").first.text
     end
   end
