@@ -4,7 +4,7 @@ RSpec.describe Mwcrawler::Departments do
       subject(:department) { @departments.first }
 
       before :all do
-        VCR.use_cassette("departments_#{campus}") do
+        VCR.use_cassette("departments/#{campus}") do
           @departments = Mwcrawler::Crawler.new.departments(campus)
         end
       end

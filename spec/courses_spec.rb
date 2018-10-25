@@ -4,7 +4,7 @@ RSpec.describe Mwcrawler::Courses do
       let(:course) { @courses.first }
 
       before :all do
-        VCR.use_cassette("courses_#{campus}") do
+        VCR.use_cassette("courses/#{campus}") do
           @courses = Mwcrawler::Crawler.new.courses(campus)
         end
       end
