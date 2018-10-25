@@ -1,5 +1,5 @@
 RSpec.describe Mwcrawler::Departments do
-  Mwcrawler::Campuses.all.each do |campus, _campus_id|
+  Mwcrawler::Campuses::CAMPUSES.each do |campus, _campus_id|
     context "Departments campus: #{campus}", :vcr do
       subject(:department) { @departments.first }
 

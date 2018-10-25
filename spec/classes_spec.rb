@@ -1,5 +1,5 @@
 RSpec.describe Mwcrawler::Classes do
-  Mwcrawler::Campuses.all.each do |campus, _campus_id|
+  Mwcrawler::Campuses::CAMPUSES.each do |campus, _campus_id|
     context "Classes campus: #{campus}" do
       before :all do
         VCR.use_cassette("classes_#{campus}") do
