@@ -75,9 +75,11 @@ module Mwcrawler
     end
 
     private_class_method def self.scrap_vacancies(page, count)
-      { vacancies_total: scrap_vacancy(1, page, count),
+      {
+        vacancies_total: scrap_vacancy(1, page, count),
         vacancies_occupied: scrap_vacancy(2, page, count),
-        vacancies_free: scrap_vacancy(3, page, count) }
+        vacancies_free: scrap_vacancy(3, page, count)
+      }
     end
 
     private_class_method def self.scrap_vacancy(vacancy_row, page, count)
