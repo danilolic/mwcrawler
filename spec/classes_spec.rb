@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mwcrawler::Classes do
   Mwcrawler::Campuses::CAMPUSES.each do |campus, _campus_id|
     context "Classes campus: #{campus}" do
