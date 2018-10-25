@@ -3,19 +3,17 @@ module Mwcrawler
   class Crawler
     include Mwcrawler
 
-    def courses(campus = :darcy_ribeiro, options = { log: false })
-      Options.init(options)
-      Courses.scrap campus
-    end
+    SCRAPPERS = {
+      courses: Courses,
+      classes: Classes,
+      departments: Departments
+    }.freeze
 
-    def classes(campus = :darcy_ribeiro, options = { log: false })
-      Options.init(options)
-      Classes.scrap campus
-    end
-
-    def departments(campus = :darcy_ribeiro, options = { log: false })
-      Options.init(options)
-      Departments.scrap campus
+    SCRAPPERS.keys.each do |method|
+      define_method(method) do |campus = :darcy_ribeiro, options = { log: false }|
+        Options.init(options)
+        SCRAPPERS[method].scrap campus
+      end
     end
 
     def semester

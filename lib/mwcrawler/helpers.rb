@@ -13,10 +13,6 @@ module Mwcrawler
 
       CAMPUSES[campus]
     end
-
-    def self.all
-      CAMPUSES
-    end
   end
 
   # Options module
