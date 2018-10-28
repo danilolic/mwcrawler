@@ -49,7 +49,15 @@ courses_hash = crawler.courses
 The crawled campus by default is `:darcy_ribeiro` campus,
 but you can specify another `crawler.classes(:planaltina)`.
 
-The available resources are `classes`, `courses` and `departments`. Also you can choose from any of the four campuses `:darcy_ribeiro`, `:planaltina`, `:ceilandia` and `:gama`
+The available resources are:
+- `classes`
+- `courses`
+- `departments`
+- `curriculum`
+
+While `classes` and `curriculum` take `course_code` as param for crawling, `courses` and `departments` take as params any of the four campuses `:darcy_ribeiro`, `:planaltina`, `:ceilandia` and `:gama`.
+
+The utility method `semester` returns the current semester.
 
 ## Development
 
