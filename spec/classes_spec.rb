@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 RSpec.describe Mwcrawler::Classes do
   Mwcrawler::Campuses::CAMPUSES.each do |campus, _campus_id|
     context "Classes campus: #{campus}" do
       before :all do
-        VCR.use_cassette("classes_#{campus}") do
+        VCR.use_cassette("classes/#{campus}") do
           @classes = Mwcrawler::Crawler.new.classes(campus)
         end
       end
