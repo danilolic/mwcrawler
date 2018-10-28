@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mwcrawler
   # Scraps Classes by campus
   module Classes

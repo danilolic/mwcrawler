@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'mwcrawler/version'
 require 'nokogiri'
 require 'pry'
@@ -12,5 +14,5 @@ require 'mwcrawler/crawler'
 
 module Mwcrawler
   # DOMINIO
-  SITE = 'https://matriculaweb.unb.br/'.freeze
+  SITE = 'https://matriculaweb.unb.br/'
 end

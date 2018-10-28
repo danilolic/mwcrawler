@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mwcrawler
   # Controls available campuses
   class Campuses

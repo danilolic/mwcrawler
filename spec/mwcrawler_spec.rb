@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Mwcrawler do
   it 'has a version number' do
     expect(Mwcrawler::VERSION).not_to be nil
