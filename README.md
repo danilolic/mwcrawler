@@ -61,6 +61,12 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/danilodelyima/mwcrawler.
 
+# Guidelines
+
+When developing new features the interface must reflect how much scrapping is necessary. In other
+words, if many pages are crawled the user must call many methods. This way we don't overload method
+with functionalities and the user developer can grasp more easily the cost of scrapping that info.
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
