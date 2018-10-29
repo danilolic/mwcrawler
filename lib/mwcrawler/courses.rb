@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'mwcrawler/curriculum'
 
 module Mwcrawler

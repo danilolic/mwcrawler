@@ -1,38 +1,27 @@
+# frozen_string_literal: true
+
 module Mwcrawler
   # Scraps Classes by campus
   module Classes
-    def self.scrap(campus)
-      page = Helpers.set_crawler(campus, 'graduacao/oferta_dep.aspx?cod=')
-      dep_links = page.css('#datatable tbody tr td:nth-child(3) a')
-                      .map { |link| link['href'] }
-
-      course_links = scrap_course_links(dep_links, page)
-
-      # CADA TURMA SERA UMA LINHA, ENTAO rows E O CONJUNTO DE TODAS AS TURMAS
+    def self.scrap(department_code)
+      courses_links = scrap_courses_links(department_code)
       rows = []
-      course_links.flatten!
-      # ITERA SOBRE TODAS AS MATERIAS PEGANDO TODAS AS TURMAS
-      course_links.each do |course_link|
+      courses_links.each do |course_link|
         rows += scrap_classes(course_link)
       end
       rows
     end
 
-    private_class_method def self.scrap_course_links(dep_links, page)
-      # LISTA DE MATERIAS (inicialmente vazia)
-      course_links = []
-      # ITERA SOBRE TODOS OS DEPARTAMENTOS PEGANDO TODAS AS MATERIAS
-      dep_links.each do |dep_link|
-        page = Nokogiri::HTML(URI.open(SITE + dep_link))
-        course_links << page.css('#datatable tr td:nth-child(2) a')
-                            .map { |link| link['href'] }
-      end
-      course_links
+    private_class_method def self.scrap_courses_links(department_code)
+      page = Helpers.set_crawler(department_code, 'graduacao/oferta_dis.aspx?cod=', exact: true)
+      page.css('#datatable tr td:nth-child(2) a')
+          .map { |link| link['href'] }
     end
+
     private_class_method def self.scrap_classes(course_link)
       rows = []
 
-      page = Nokogiri::HTML(URI.open(SITE + course_link))
+      page = Helpers.set_crawler(course_link, 'graduacao/', exact: true)
       page_classes = page.css('.tabela-oferta .turma').map(&:text)
 
       page_classes.each_with_index do |cl, i|
@@ -44,10 +33,21 @@ module Mwcrawler
     end
     private_class_method def self.class_row_init(page, name)
       { department: page.css('#datatable tr:first-child a').text,
-        code:  page.css('#datatable')[0].css('tr:nth-child(2) td').text,
-        course: page.css('#datatable')[0].css('tr:nth-child(3) td').text,
-        credits: page.css('#datatable')[0].css('tr:nth-child(4) td').text,
+        code:  page.css('#datatable')[0].css('tr:nth-child(2) td').text.to_i,
+        course_code: scrap_course_code(page),
+        credits: scrap_credit_hash(page),
         name: name }
+    end
+
+    private_class_method def self.scrap_course_code(page)
+      course_uri = page.css('#datatable')[0].css('tr:nth-child(3) td a').first['href']
+      Helpers.uri_query_params(course_uri)['cod'].to_i
+    end
+
+    private_class_method def self.scrap_credit_hash(page)
+      credit_string = page.css('#datatable')[0].css('tr:nth-child(4) td').text
+      credits = credit_string.split('-').map(&:to_i)
+      { theory: credits[0], practical: credits[1], extension: credits[2], study: credits[3] }
     end
 
     private_class_method def self.scrap_row(row_init, page, count)
@@ -77,9 +77,11 @@ module Mwcrawler
     end
 
     private_class_method def self.scrap_vacancies(page, count)
-      { vacancies_total: scrap_vacancy(1, page, count),
+      {
+        vacancies_total: scrap_vacancy(1, page, count),
         vacancies_occupied: scrap_vacancy(2, page, count),
-        vacancies_free: scrap_vacancy(3, page, count) }
+        vacancies_free: scrap_vacancy(3, page, count)
+      }
     end
 
     private_class_method def self.scrap_vacancy(vacancy_row, page, count)

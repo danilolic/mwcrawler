@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mwcrawler
   # Scraps curriculums by course code
   module Curriculum

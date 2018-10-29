@@ -49,7 +49,15 @@ courses_hash = crawler.courses
 The crawled campus by default is `:darcy_ribeiro` campus,
 but you can specify another `crawler.classes(:planaltina)`.
 
-The available resources are `classes`, `courses` and `departments`. Also you can choose from any of the four campuses `:darcy_ribeiro`, `:planaltina`, `:ceilandia` and `:gama`
+The available resources are:
+- `classes`
+- `courses`
+- `departments`
+- `curriculum`
+
+While `classes` and `curriculum` take `course_code` as param for crawling, `courses` and `departments` take as params any of the four campuses `:darcy_ribeiro`, `:planaltina`, `:ceilandia` and `:gama`.
+
+The utility method `semester` returns the current semester.
 
 ## Development
 
@@ -59,7 +67,13 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/mwcrawler.
+Bug reports and pull requests are welcome on GitHub at https://github.com/danilodelyima/mwcrawler.
+
+# Guidelines
+
+When developing new features the interface must reflect how much scrapping is necessary. In other
+words, if many pages are crawled the user must call many methods. This way we don't overload method
+with functionalities and the user developer can grasp more easily the cost of scrapping that info.
 
 ## License
 
