@@ -20,5 +20,10 @@ module Mwcrawler
       page = Helpers.set_crawler(nil, 'graduacao/default.aspx', exact: true)
       page.css("a[title='Período Atual'] span").first.text
     end
+
+    def find_course(course_id)
+      page = Helpers.set_crawler(nil, "graduacao/disciplina.aspx?cod=#{course_id}", exact: true)
+      Mwcrawler::Course.new(page)
+    end
   end
 end
