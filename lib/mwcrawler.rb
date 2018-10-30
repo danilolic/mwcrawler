@@ -9,6 +9,7 @@ require 'mwcrawler/courses'
 require 'mwcrawler/departments'
 require 'mwcrawler/helpers'
 require 'mwcrawler/crawler'
+require 'mwcrawler/course'
 
 module Mwcrawler
   # DOMINIO
