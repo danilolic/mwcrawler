@@ -1,26 +1,27 @@
 # Mwcrawler
 
-Mwcrawler is a gem for parsing UnB's Matricula Web data into consumable hashes.
+Mwcrawler é uma gema para fazer o parsing dos dados do Matrícula Web da UnB e transformá-los em hashes que podem ser consumidos.
 
-## Installation
+## Instalação
 
-Add this line to your application's Gemfile:
+Adicione essa linha ao Gemfile da sua aplicação:
 
 ```ruby
 gem 'mwcrawler'
 ```
 
-And then execute:
+E então rode o comando:
 
     $ bundle
 
-Or install it yourself as:
+Ou instale você mesmo utilizando:
 
     $ gem install mwcrawler
 
-## Usage
+## Utilização
 
-First instantiate a new crawler `crawler = Mwcrawler::Crawler.new` then you can crawl like so:
+Primeiro instancie um novo crawler com `crawler = Mwcrawler::Crawler.new`
+depois pode utilizar assim:
 ```ruby
 courses_hash = crawler.courses
 # return example
@@ -46,21 +47,21 @@ courses_hash = crawler.courses
      "credits"=>"200"}]}
 ]
 ```
-The crawled campus by default is `:darcy_ribeiro` campus,
-but you can specify another `crawler.classes(:planaltina)`.
+O campus padrão passado ao crawler é o `:darcy_ribeiro`, mas você pode especificar outro com `crawler.classes(:planaltina)`.
 
-The available resources are `classes`, `courses` and `departments`. Also you can choose from any of the four campuses `:darcy_ribeiro`, `:planaltina`, `:ceilandia` and `:gama`
+Os recursos disponíveis são `classes`, `courses` e `departments`. Além disso, pode ser escolhido qualquer um dos quatro campus `:darcy_ribeiro`, `:planaltina`, `:ceilandia` and `:gama`
 
-## Development
+## Desenvolvimento
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Depois de dar checkout no repositório, rode `bin/setup` para instalar as dependências. Então, rode `rake spec` para rodar os testes. Adicionalmente, pode rodar `bin/console` para um console interativo que vai permitir a experimentação com a gema.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Para instalar essa gema na sua máquina local, rode `bundle exec rake install`. Para lançar uma nova versão, atualize a número da versão em `version.rb`, e depois rode `bundle exec rake release`, que vai criar uma tag no git para a versão, dê um push nos commits e nas tags, e dê um push no arquivo `.gem` para [rubygems.org](https://rubygems.org).
 
-## Contributing
+## Contribuindo
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/mwcrawler.
+Reportar bugs e fazer pull requests são bem-vindas no Github em https://github.com/danilodelyima/mwcrawler.
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+Essa gema está disponível como código aberto sob os termos da licença
+[MIT License](https://opensource.org/licenses/MIT).
