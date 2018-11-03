@@ -4,7 +4,7 @@ dist: trusty
 sudo: false
 cache: bundler
 before_install:
-  - gem install bundler -v 1.16.1 --no-document,
+  - gem install bundler -v 1.16.1 --no-document
   - bundle install
 script:
   - bundle exec rubocop
