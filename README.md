@@ -2,6 +2,8 @@
 
 Mwcrawler is a gem for parsing UnB's Matricula Web data into consumable hashes.
 
+[![Build Status](https://travis-ci.com/danilodelyima/mwcrawler.svg?branch=master)](https://travis-ci.com/danilodelyima/mwcrawler)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -21,6 +23,7 @@ Or install it yourself as:
 ## Usage
 
 First instantiate a new crawler `crawler = Mwcrawler::Crawler.new` then you can crawl like so:
+
 ```ruby
 courses_hash = crawler.courses
 # return example
@@ -46,10 +49,12 @@ courses_hash = crawler.courses
      "credits"=>"200"}]}
 ]
 ```
+
 The crawled campus by default is `:darcy_ribeiro` campus,
 but you can specify another `crawler.classes(:planaltina)`.
 
 The available resources are:
+
 - `classes`
 - `courses`
 - `departments`
