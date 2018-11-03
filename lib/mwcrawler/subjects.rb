@@ -1,26 +1,21 @@
+# frozen_string_literal: true
+
 module Mwcrawler
   # Scraps Subjects by department
   module Subjects
-    def self.scrap(campus_or_id, options)
+    def self.scrap(department_or_id, options)
       if options[:by_id]
-        subject_by_id(campus_or_id)
+        subject_by_id(department_or_id)
+      elsif options[:by_department]
+        subject_by_department(department_or_id)
       else
-        subject_all(campus_or_id)
+        raise ArgumentError, 'second argument not specified. You can find a subject by department code or id'
       end
     end
 
-    private_class_method def self.subject_all(campus)
-      page = Helpers.set_crawler(campus, 'graduacao/oferta_dep.aspx?cod=')
-      dep_links = department_links(page)
-      dep_codes = department_codes(page)
-
-      rows = []
-
-      dep_links.each_with_index do |link, index|
-        page = Nokogiri::HTML(URI.open(SITE + 'graduacao/' + link))
-        rows << scrap_row(dep_codes[index], page)
-      end
-      rows.flatten!
+    private_class_method def self.subject_by_department(department)
+      page = Helpers.set_crawler(department, 'graduacao/oferta_dis.aspx?cod=', exact: true)
+      scrap_row(department, page)
     end
 
     private_class_method def self.subject_by_id(id)
@@ -39,24 +34,16 @@ module Mwcrawler
       subjects = []
       length = page.css('#datatable tr td:nth-child(1)').count
       length.times do |i|
-        subjects << row_init(page, dep_code, i)
+        subjects << row_init_by_department(page, dep_code, i)
       end
       subjects
     end
 
-    private_class_method def self.row_init(page, department, index)
+    private_class_method def self.row_init_by_department(page, dep_code, index)
       { code: page.css('#datatable tr td:nth-child(1)').map(&:text)[index].to_i,
         name: page.css('#datatable tr td:nth-child(2)').map(&:text)[index],
-        department: department.to_i,
+        department: dep_code.to_i,
         level: 'graduação' }
-    end
-
-    private_class_method def self.department_links(page)
-      page.css('#datatable tr td:nth-child(3) a').map { |link| link['href'] }
-    end
-
-    private_class_method def self.department_codes(page)
-      page.css('#datatable tr td:nth-child(1)').map(&:text)
     end
   end
 end
