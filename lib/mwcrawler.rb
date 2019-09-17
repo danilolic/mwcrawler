@@ -9,6 +9,7 @@ require 'json'
 require 'mwcrawler/classes'
 require 'mwcrawler/courses'
 require 'mwcrawler/departments'
+require 'mwcrawler/subjects'
 require 'mwcrawler/helpers'
 require 'mwcrawler/crawler'
 
