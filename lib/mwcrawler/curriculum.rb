@@ -6,7 +6,7 @@ module Mwcrawler
     def self.scrap(code)
       rows = []
       page = Helpers.set_crawler(code, 'graduacao/curso_dados.aspx?cod=', exact: true)
-      curriculums = page.css('.table-responsive h4').map { |item| item.children[0].text }
+      curriculums = page.css('.table-responsive h4').map { |item| item.children[0]&.text }
       page.css('.table-responsive .table').each do |table|
         rows << scrap_row(curriculums.shift, table)
       end
