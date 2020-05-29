@@ -3,7 +3,7 @@
 module Mwcrawler
   # Scraps Classes by campus
   module Classes
-    def self.scrap(department_code)
+    def self.scrap(department_code, _options)
       courses_links = scrap_courses_links(department_code)
       rows = []
       courses_links.each do |course_link|

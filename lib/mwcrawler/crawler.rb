@@ -7,7 +7,6 @@ module Mwcrawler
 
     SCRAPPERS = {
       courses: Courses,
-      classes: Classes,
       departments: Departments
     }.freeze
 
@@ -16,6 +15,11 @@ module Mwcrawler
         Options.init(options)
         SCRAPPERS[method].scrap campus
       end
+    end
+
+    def classes(department_code, options = { log: false })
+      Options.init(options)
+      Classes.scrap department_code, options
     end
 
     def subjects(department, options = { log: false })
