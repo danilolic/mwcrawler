@@ -17,7 +17,9 @@ module Mwcrawler
       rows
     end
 
-    private_class_method def self.scrap_row(courses)
+    private
+
+    def self.scrap_row(courses)
       row = {}
       row['type'] = courses.shift
       row['code'] = courses.shift

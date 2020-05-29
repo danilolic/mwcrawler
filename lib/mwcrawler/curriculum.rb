@@ -13,7 +13,9 @@ module Mwcrawler
       rows
     end
 
-    private_class_method def self.scrap_row(curriculum_name, table)
+    private
+
+    def self.scrap_row(curriculum_name, table)
       row = {}
       row['name'] = curriculum_name
       row['degree'] = table.css('tr:first td').text

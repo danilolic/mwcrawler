@@ -13,7 +13,9 @@ module Mwcrawler
       rows
     end
 
-    private_class_method def self.scrap_row(departments)
+    private
+
+    def self.scrap_row(departments)
       row = {}
       row['code'] = departments.shift
       row['acronym'] = departments.shift
