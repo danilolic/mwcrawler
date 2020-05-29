@@ -2,7 +2,7 @@
 
 Mwcrawler is a gem for parsing UnB's Matricula Web data into consumable hashes.
 
-[![Build Status](https://travis-ci.com/danilodelyima/mwcrawler.svg?branch=master)](https://travis-ci.com/danilodelyima/mwcrawler)
+[![Build Status](https://travis-ci.com/danilolic/mwcrawler.svg?branch=master)](https://travis-ci.com/danilolic/mwcrawler)
 [![Coverage Status](https://coveralls.io/repos/github/danilodelyima/mwcrawler/badge.svg?branch=master)](https://coveralls.io/github/danilodelyima/mwcrawler?branch=master)
 
 ## Installation
